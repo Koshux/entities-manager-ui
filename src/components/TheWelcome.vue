@@ -13,7 +13,6 @@ import SupportIcon from './icons/IconSupport.vue'
       <DocumentationIcon />
     </template>
     <template #heading>Documentation</template>
-
   </WelcomeItem>
 
   <WelcomeItem>

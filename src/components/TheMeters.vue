@@ -1,6 +1,4 @@
-<template>
-  The Meters component
-</template>
+<template>The Meters component</template>
 
 <script setup lang="ts">
 defineProps<{}>()

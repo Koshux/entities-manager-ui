@@ -26,7 +26,6 @@ onMounted(async () => {
     return count + siteCircuitCount
   }, 0)
 })
-
 </script>
 
 <template>

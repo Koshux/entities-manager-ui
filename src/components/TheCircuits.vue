@@ -1,6 +1,4 @@
-<template>
-  The Circuits component
-</template>
+<template>The Circuits component</template>
 
 <script setup lang="ts">
 defineProps<{}>()

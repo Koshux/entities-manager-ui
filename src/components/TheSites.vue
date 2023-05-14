@@ -1,6 +1,4 @@
-<template>
-  The Sites component
-</template>
+<template>The Sites component</template>
 
 <script setup lang="ts">
 defineProps<{}>()
