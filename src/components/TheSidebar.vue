@@ -1,61 +1,65 @@
 <template>
+  <header>
+    <el-button
+      :icon="sidebarStore.isCollapseIcon"
+      @click="sidebarStore.toggleSidebar"
+      circle
+    />
+  </header>
   <el-menu
     default-active="2"
     class="el-menu-vertical-demo"
-    @open="handleOpen"
-    @close="handleClose"
+    :collapse="sidebarStore.isCollapse"
+    @open="sidebarStore.handleOpen"
+    @close="sidebarStore.handleClose"
+    router="true"
   >
-    <el-menu-item index="1">
+    <el-menu-item index="1" route="/">
       <el-icon><icon-menu /></el-icon>
       <template #title>
-        <RouterLink to="/">Dashboard</RouterLink>
+          Dashboard
       </template>
     </el-menu-item>
-    <el-menu-item index="2">
+    <el-menu-item index="2" route="/customers">
       <el-icon><setting /></el-icon>
       <template #title>
-        <RouterLink to="/customers">Customers</RouterLink>
+          Profile
       </template>
     </el-menu-item>
-    <el-menu-item index="3">
+    <el-menu-item index="3" route="/sites">
       <el-icon><icon-menu /></el-icon>
       <template #title>
-        <RouterLink to="/sites">Sites</RouterLink>
+          Sites
       </template>
     </el-menu-item>
-    <el-menu-item index="4">
+    <el-menu-item index="4" route="/meters">
       <el-icon><setting /></el-icon>
       <template #title>
-        <RouterLink to="/meters">Meters</RouterLink>
+        Meters
       </template>
     </el-menu-item>
-    <el-menu-item index="5">
+    <el-menu-item index="5" route="/circuits">
       <el-icon><setting /></el-icon>
       <template #title>
-        <RouterLink to="/circuits">Circuits</RouterLink>
+          Circuits
       </template>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import {
   Menu as IconMenu,
   Setting,
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref(false)
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+import { useSidebarStore } from '@/stores/sidebar'
+const sidebarStore = useSidebarStore()
+
 </script>
 
 <style>
-.el-menu-vertical-demo {
+.el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
 }

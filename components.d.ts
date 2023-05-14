@@ -9,7 +9,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElLink: typeof import('element-plus/es')['ElLink']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
@@ -28,6 +30,7 @@ declare module '@vue/runtime-core' {
     TheCustomers: typeof import('./src/components/TheCustomers.vue')['default']
     TheDashboard: typeof import('./src/components/TheDashboard.vue')['default']
     TheMeters: typeof import('./src/components/TheMeters.vue')['default']
+    TheProfile: typeof import('./src/components/TheProfile.vue')['default']
     TheSidebar: typeof import('./src/components/TheSidebar.vue')['default']
     TheSites: typeof import('./src/components/TheSites.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']

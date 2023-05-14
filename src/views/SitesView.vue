@@ -1,8 +1,12 @@
 <template>
   <div class="about">
-    <h1>Sites list</h1>
+    <TheSites />
   </div>
 </template>
+
+<script lang="ts" setup>
+import TheSites from '@/components/TheSites.vue'
+</script>
 
 <style>
 @media (min-width: 1024px) {

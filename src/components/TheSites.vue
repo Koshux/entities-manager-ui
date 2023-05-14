@@ -1,5 +1,7 @@
-<template>The Sites component</template>
+<template>
+  <h1>Sites</h1>
+</template>
 
 <script setup lang="ts">
-defineProps<{}>()
+// defineProps<{}>()
 </script>

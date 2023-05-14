@@ -1,5 +1,5 @@
 <template>
-  <h1>Meters</h1>
+  <h1>Profile</h1>
 </template>
 
 <script setup lang="ts">
