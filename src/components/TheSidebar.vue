@@ -1,70 +1,39 @@
-<!-- <template>
-  <nav>
-    <ul>
-      <li>
-        <RouterLink to="/">Dashboard</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/customers">Customers</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/sites">Sites</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/meters">Meters</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/circuits">Circuits</RouterLink>
-      </li>
-    </ul>
-  </nav>
-</template>
-
-<script setup lang="ts">
-import { RouterLink } from 'vue-router'
-defineProps<{}>()
-</script> -->
 <template>
-  <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-    <el-radio-button :label="false">expand</el-radio-button>
-    <el-radio-button :label="true">collapse</el-radio-button>
-  </el-radio-group>
   <el-menu
     default-active="2"
     class="el-menu-vertical-demo"
-    :collapse="isCollapse"
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-sub-menu index="1">
-      <template #title>
-        <el-icon><location /></el-icon>
-        <span>Navigator One</span>
-      </template>
-      <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu>
-    </el-sub-menu>
-    <el-menu-item index="2">
+    <el-menu-item index="1">
       <el-icon><icon-menu /></el-icon>
-      <template #title>Navigator Two</template>
+      <template #title>
+        <RouterLink to="/">Dashboard</RouterLink>
+      </template>
     </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <el-icon><document /></el-icon>
-      <template #title>Navigator Three</template>
+    <el-menu-item index="2">
+      <el-icon><setting /></el-icon>
+      <template #title>
+        <RouterLink to="/customers">Customers</RouterLink>
+      </template>
+    </el-menu-item>
+    <el-menu-item index="3">
+      <el-icon><icon-menu /></el-icon>
+      <template #title>
+        <RouterLink to="/sites">Sites</RouterLink>
+      </template>
     </el-menu-item>
     <el-menu-item index="4">
       <el-icon><setting /></el-icon>
-      <template #title>Navigator Four</template>
+      <template #title>
+        <RouterLink to="/meters">Meters</RouterLink>
+      </template>
+    </el-menu-item>
+    <el-menu-item index="5">
+      <el-icon><setting /></el-icon>
+      <template #title>
+        <RouterLink to="/circuits">Circuits</RouterLink>
+      </template>
     </el-menu-item>
   </el-menu>
 </template>
@@ -72,13 +41,11 @@ defineProps<{}>()
 <script lang="ts" setup>
 import { ref } from 'vue'
 import {
-  Document,
   Menu as IconMenu,
-  Location,
   Setting,
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref(true)
+const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
@@ -88,7 +55,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 </script>
 
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+.el-menu-vertical-demo {
   width: 200px;
   min-height: 400px;
 }
