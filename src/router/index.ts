@@ -8,7 +8,7 @@ const router = createRouter({
     name: 'home',
     component: DashboardView
   }, {
-    path: '/customers',
+    path: '/profile',
     name: 'customers',
     component: () => import('@/views/ProfileView.vue')
   }, {

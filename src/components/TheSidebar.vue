@@ -20,7 +20,7 @@
           Dashboard
       </template>
     </el-menu-item>
-    <el-menu-item index="2" route="/customers">
+    <el-menu-item index="2" route="/profile">
       <el-icon><setting /></el-icon>
       <template #title>
           Profile
