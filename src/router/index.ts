@@ -10,7 +10,7 @@ const router = createRouter({
   }, {
     path: '/customers',
     name: 'customers',
-    component: () => import('@/views/CustomersView.vue')
+    component: () => import('@/views/ProfileView.vue')
   }, {
     path: '/sites',
     name: 'sites',
