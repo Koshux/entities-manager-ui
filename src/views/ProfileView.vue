@@ -1,8 +1,12 @@
 <template>
   <div class="about">
-    <h1>Customers list</h1>
+    <TheProfile />
   </div>
 </template>
+
+<script lang="ts" setup>
+import TheProfile from '@/components/TheProfile.vue';
+</script>
 
 <style>
 @media (min-width: 1024px) {

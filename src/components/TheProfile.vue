@@ -1,7 +1,7 @@
 <template>
-  The Customers component
+  <h1>Profile</h1>
 </template>
 
 <script setup lang="ts">
-defineProps<{}>()
+// defineProps<{}>()
 </script>

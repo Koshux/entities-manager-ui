@@ -1,8 +1,12 @@
 <template>
   <div class="about">
-    <h1>Meters list</h1>
+    <TheMeters />
   </div>
 </template>
+
+<script lang="ts" setup>
+import type TheMeters from '@/components/TheMeters.vue'
+</script>
 
 <style>
 @media (min-width: 1024px) {

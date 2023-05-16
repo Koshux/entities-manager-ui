@@ -1,3 +1,21 @@
+<template>
+  <main>
+    <TheWelcome />
+    <div>
+      <h2>Sites</h2>
+      <p>{{ siteCount }}</p>
+    </div>
+    <div>
+      <h2>Meters</h2>
+      <p>{{ meterCount }}</p>
+    </div>
+    <div>
+      <h2>Circuits</h2>
+      <p>{{ circuitCount }}</p>
+    </div>
+  </main>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 // import { useStore } from 'pinia'
@@ -26,23 +44,4 @@ onMounted(async () => {
     return count + siteCircuitCount
   }, 0)
 })
-
 </script>
-
-<template>
-  <main>
-    <!-- <TheWelcome /> -->
-    <div>
-      <h2>Sites</h2>
-      <p>{{ siteCount }}</p>
-    </div>
-    <div>
-      <h2>Meters</h2>
-      <p>{{ meterCount }}</p>
-    </div>
-    <div>
-      <h2>Circuits</h2>
-      <p>{{ circuitCount }}</p>
-    </div>
-  </main>
-</template>
