@@ -1,6 +1,28 @@
-// import { ref } from 'vue'
+import { ref } from 'vue'
+import type { Customer } from '@/interfaces/customer'
 import { defineStore } from 'pinia'
 
 export const useProfileStore = defineStore('profile', () => {
-  return {}
+  const customerProfile = ref<Customer | null>(null)
+
+  const fetchProfile = async () => {
+    const response = await fetch('http://localhost:3333/profile')
+    customerProfile.value = await response.json()
+  }
+
+  const updateProfile = async (profile: Customer) => {
+    const response = await fetch(`http://localhost:3333/profile`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profile)
+    })
+
+    customerProfile.value = profile
+  }
+
+  return {
+    customerProfile,
+    fetchProfile,
+    updateProfile
+  }
 })
