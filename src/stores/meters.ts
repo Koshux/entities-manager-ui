@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Meter } from '@/interfaces/meter'
+import type { Meter } from '@/interfaces/Meter'
 
 export const useMetersStore = defineStore('meters', () => {
   const meters = ref<Meter[]>([])

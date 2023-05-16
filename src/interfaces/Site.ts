@@ -1,4 +1,4 @@
-import type { Meter } from './meter'
+import type { Meter } from './Meter'
 
 export interface Site {
   id: number

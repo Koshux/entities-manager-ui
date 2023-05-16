@@ -6,6 +6,7 @@ export const useSitesStore = defineStore('sites', () => {
   const sites = ref<Site[]>([])
   const selectedSite = ref<Site | null>(null)
 
+  // Create a method to fetch all sites with a GET request and application/json header with typescript
   const fetchSites = async () => {
     const response = await fetch('http://localhost:3333/sites')
     sites.value = await response.json()

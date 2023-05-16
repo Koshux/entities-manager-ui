@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import type { Circuit } from '@/interfaces/circuit'
+import type { Circuit } from '@/interfaces/Circuit'
 import { defineStore } from 'pinia'
 
 export const useCircuitsStore = defineStore('circuits', () => {
@@ -8,6 +8,7 @@ export const useCircuitsStore = defineStore('circuits', () => {
 
   const fetchCircuits = async () => {
     const response = await fetch('http://localhost:3333/circuits')
+    console.log('RESPONSE', response)
     circuits.value = await response.json()
   }
 

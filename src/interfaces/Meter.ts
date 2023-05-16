@@ -1,4 +1,4 @@
-import type { Circuit } from './circuit'
+import type { Circuit } from './Circuit'
 
 export interface Meter {
   id: number

@@ -1,7 +1,61 @@
 <template>
   <h1>Circuits</h1>
+  <el-button
+    type="primary"
+    icon="el-icon-plus"
+    size="small"
+  >
+    Create New Circuit
+  </el-button>
+
+  <el-card
+    v-for="circuit in circuits"
+    :key="circuit.id"
+    class="box-card"
+    shadow="hover"
+  >
+    <div class="text item">
+      <span class="title">{{ circuit.name }}</span>
+      <span class="content">{{ circuit.installationDate }}</span>
+    </div>
+    <div class="text item">
+      <span class="title">{{ circuit.isMain }}</span>
+    </div>
+    <div class="text item">
+      <span class="title">{{ circuit.createdAt }}</span>
+      <span class="content">{{ circuit.updatedAt }}</span>
+    </div>
+    <div class="text item">
+      <el-button
+        type="primary"
+        icon="el-icon-edit"
+        size="small"
+      >
+        Edit
+      </el-button>
+      <el-button
+        type="danger"
+        icon="el-icon-delete"
+        size="small"
+      >
+        Delete
+      </el-button>
+    </div>
+  </el-card>
 </template>
 
 <script setup lang="ts">
-// defineProps<{}>()
+// Using what we have done in TheSites.vue, TheProfile.vue, and TheMeters.vue, implement the same logic for TheMeters.vue such that it calls fetchCircuits which is a async function in the meters pinia store and renders the meters data in a card using element-plus and typescript
+import { ref } from 'vue';
+import { useCircuitsStore } from '@/stores/circuits'
+import { onMounted } from 'vue';
+import type { Ref } from 'vue';
+import type { Circuit } from '@/interfaces/Circuit.js'
+
+const circuitsStore = useCircuitsStore()
+const circuits: Ref<Circuit[]> = ref(circuitsStore.circuits)
+
+onMounted(async () => {
+  await circuitsStore.fetchCircuits()
+})
 </script>
