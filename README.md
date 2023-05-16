@@ -50,3 +50,30 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## TODO
+- Use element-plus Cascader component for dropdowns with business logic.
+- We want the ability to create a site.
+- We want to be able to create a meter and a circuit as a direct link to the site when creating a new site.
+    - If there are no meters or circuits, the user should be able to create one.
+- We want to be able to create a meter.
+- We want to be able to create a circuit as a direct link (child) to the new meter being created.
+- We want to be able to create a circuit.
+- We want to be able to create a circuit as a direct link (child) to the new circuit being created.
+- We want to be able to create a circuit as a direct link (child) to the meter when creating a new circuit.
+- We want to be able to create a circuit as a direct link (child) to the site when creating a new circuit.
+
+Site
+  > Create meter
+  > Create circuit
+  > Link to meter
+  > Link to circuit
+
+Meter
+  > Create circuit
+  > Link to site
+
+Circuit
+  > Create circuit
+  > Link to meter
+  > Link to site
