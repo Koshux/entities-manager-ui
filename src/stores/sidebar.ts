@@ -7,7 +7,7 @@ import {
 } from '@element-plus/icons-vue'
 
 export const useSidebarStore = defineStore('sidebar', () => {
-  const isCollapse = ref(true)
+  const isCollapse = ref(false)
   const isCollapseIcon = ref(ArrowLeftBold)
 
   watch(isCollapse, newState => {

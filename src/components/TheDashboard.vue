@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 // import { useStore } from 'pinia'
-import fetchCustomerData from '@/api/customers'
+import fetchCustomerData from '@/api/profile'
 
 // const store = useStore()
 const siteCount = ref(0)
