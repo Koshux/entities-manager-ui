@@ -51,6 +51,7 @@ const customerProfile: Ref<Customer | null> = ref(profileStore.customerProfile)
 // Call the fetchProfile action from the profile pinia store
 onMounted(async () => {
   await profileStore.fetchProfile()
+  customerProfile.value = profileStore.customerProfile
 })
 
 </script>

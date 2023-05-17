@@ -25,19 +25,19 @@ export default defineConfig({
   server: {
     proxy: {
       '/circuits': {
-        target: 'http://localhost:3333/',
+        target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       },
       '/meters': {
-        target: 'http://localhost:3333/',
+        target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       },
       '/profile': {
-        target: 'http://localhost:3333/',
+        target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       },
       '/sites': {
-        target: 'http://localhost:3333/',
+        target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       }
     }

@@ -1,18 +1,18 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="350px">
       <TheSidebar />
     </el-aside>
     <el-main>
       <RouterView />
     </el-main>
   </el-container>
-  <div class="container">
+  <!-- <div class="container"> -->
     <!-- <TheSidebar  />
     <main>
       <RouterView />
     </main> -->
-  </div>
+  <!-- </div> -->
 </template>
 
 <script setup lang="ts">
