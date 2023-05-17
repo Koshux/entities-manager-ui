@@ -1,14 +1,14 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import fetchCustomerData from '@/api/profile'
+// import fetchProfileData from '@/api/profile'
 
 export const useMainStore = defineStore('main', () => {
   const profile = ref({})
 
-  const fetchUserData = fetchCustomerData()
+  // const fetchUserData = fetchProfileData()
 
   return {
-    fetchUserData,
+    // fetchUserData,
     profile
   }
 })

@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import fetchCustomerData from '@/api/profile';
+import { fetchAllProfiles } from '@/api/profile';
 import { useCircuitsStore } from '@/stores/circuits';
 import { useMetersStore } from '@/stores/meters';
 import { useSitesStore } from '@/stores/sites';
@@ -33,7 +33,7 @@ const meterCount = ref(0)
 const circuitCount = ref(0)
 
 onMounted(async () => {
-  await fetchCustomerData()
+  await fetchAllProfiles()
   await sitesStore.fetchSites()
   await metersStore.fetchMeters()
   await circuitsStore.fetchCircuits()

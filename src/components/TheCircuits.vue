@@ -2,7 +2,7 @@
   <h1>Circuits</h1>
   <el-button
     type="primary"
-    icon="el-icon-plus"
+    :icon="Plus"
     size="small"
   >
     Create New Circuit
@@ -28,14 +28,14 @@
     <div class="text item">
       <el-button
         type="primary"
-        icon="el-icon-edit"
+        :icon="Edit"
         size="small"
       >
         Edit
       </el-button>
       <el-button
         type="danger"
-        icon="el-icon-delete"
+        :icon="Delete"
         size="small"
       >
         Delete
@@ -51,6 +51,7 @@ import { useCircuitsStore } from '@/stores/circuits'
 import { onMounted } from 'vue';
 import type { Ref } from 'vue';
 import type { Circuit } from '@/interfaces/Circuit.js'
+import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 
 const circuitsStore = useCircuitsStore()
 const circuits: Ref<Circuit[]> = ref(circuitsStore.circuits)

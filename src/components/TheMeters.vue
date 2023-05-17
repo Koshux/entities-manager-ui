@@ -4,7 +4,7 @@
     <div class="grid-row">
       <el-button
         type="primary"
-        icon="el-icon-plus"
+        :icon="Plus"
         size="small"
       >
         Create New Meter
@@ -29,14 +29,14 @@
         <div class="text item">
           <el-button
             type="primary"
-            icon="el-icon-edit"
+            :icon="Edit"
             size="small"
           >
             Edit
           </el-button>
           <el-button
             type="danger"
-            icon="el-icon-delete"
+            :icon="Delete"
             size="small"
           >
             Delete
@@ -53,6 +53,7 @@ import type { Meter } from '@/interfaces/Meter'
 import { useMetersStore } from '@/stores/meters'
 import { onMounted } from 'vue'
 import type { Ref } from 'vue'
+import { Delete, Edit, Plus } from '@element-plus/icons-vue'
 
 const metersStore = useMetersStore()
 

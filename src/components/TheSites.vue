@@ -2,7 +2,7 @@
   <h1>Sites</h1>
   <el-button
     type="primary"
-    icon="el-icon-plus"
+    :icon="Plus"
     size="small"
   >
     Create New Site
@@ -17,6 +17,8 @@
   >
     <div class="text item">
       <span class="title">{{ site.name }}</span>
+    </div>
+    <div class="text item">
       <span class="content">{{ site.address }}</span>
     </div>
     <div class="text item">
@@ -27,17 +29,17 @@
       <span class="title">{{ site.createdAt }}</span>
       <span class="content">{{ site.updatedAt }}</span>
     </div>
-    <div class="text item">
+    <div class="flex justify-content-end">
       <el-button
         type="primary"
-        icon="el-icon-edit"
+        :icon="Edit"
         size="small"
       >
         Edit
       </el-button>
       <el-button
         type="danger"
-        icon="el-icon-delete"
+        :icon="Delete"
         size="small"
       >
         Delete
@@ -53,6 +55,7 @@ import type { Site } from '@/interfaces/Site'
 import { useSitesStore } from '@/stores/sites'
 import { onMounted } from 'vue';
 import type { Ref } from 'vue';
+import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 
 const sitesStore = useSitesStore()
 
