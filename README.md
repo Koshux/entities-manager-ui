@@ -91,11 +91,8 @@ The compiled assets will be located in the dist directory.
 
 ### Usage
 
-1. Register a new account using the registration form.
-2. Log in with your account credentials.
-3. Explore the various pages to manage customers, sites, meters, and circuits.
-4. Use the navigation sidebar to switch between pages.
-5. Log out when you're done.
+1. Explore the various pages to manage your profile, sites, meters, and circuits.
+2. Use the navigation sidebar to switch between pages.
 
 ## API Documentation
 
