@@ -1,4 +1,4 @@
-import type { Customer } from '@/interfaces/Customer'
+import type { CustomerPayload } from '@/interfaces/Customer'
 
 export const fetchAllProfiles = async (): Promise<Response> => {
   const options = {
@@ -18,7 +18,7 @@ export const fetchProfileData = async (id: number): Promise<Response> => {
   return await fetch(`/v1/profile/${id}`, options)
 }
 
-export const updateCustomerData = async (payload: Customer): Promise<Response> => {
+export const updateCustomerData = async (payload: CustomerPayload): Promise<Response> => {
   const options = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

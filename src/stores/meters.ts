@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, type ComputedRef, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Meter } from '@/interfaces/Meter'
 import { createNewMeter, fetchAllMeters, fetchMeter, removeMeter, saveMeter } from '@/api/meters'
@@ -6,6 +6,8 @@ import { createNewMeter, fetchAllMeters, fetchMeter, removeMeter, saveMeter } fr
 export const useMetersStore = defineStore('meters', () => {
   const meters = ref<Meter[]>([])
   const selectedMeter = ref<Meter | null>(null)
+
+  const metersCount: ComputedRef<number> = computed(() => meters.value.length)
 
   const fetchMeters = async () => {
     const response = await fetchAllMeters()
@@ -27,8 +29,7 @@ export const useMetersStore = defineStore('meters', () => {
   }
 
   const updateMeter = async (meter: Meter) => {
-    const response = await saveMeter(meter)
-
+    await saveMeter(meter)
     meters.value = meters.value.map((m) => (m.id === meter.id ? meter : m))
 
     if (selectedMeter.value?.id === meter.id) {
@@ -47,11 +48,12 @@ export const useMetersStore = defineStore('meters', () => {
 
   return {
     meters,
+    metersCount,
     selectedMeter,
     fetchMeters,
     fetchMeterById,
     createMeter,
     updateMeter,
     deleteMeter
-  }
+  } as const
 })

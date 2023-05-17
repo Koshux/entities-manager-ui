@@ -8,34 +8,34 @@
       label-width="120px"
     >
       <el-form-item label="Customer name">
-        <el-input v-model="form.name" :disabled="!isEditable" clearable />
+        <el-input v-model="form.name" clearable />
       </el-form-item>
 
       <el-form-item label="Email">
-        <el-input v-model="form.email" :disabled="!isEditable" clearable />
+        <el-input v-model="form.email" clearable />
       </el-form-item>
 
       <el-form-item label="VAT Number">
-        <el-input v-model="form.vatNumber" :disabled="!isEditable" clearable />
+        <el-input v-model="form.vatNumber" clearable />
       </el-form-item>
 
       <el-form-item label="Created at">
-        <el-input v-model="form.createdAt" :disabled="!isEditable" clearable />
+        <el-input v-model="form.createdAt" disabled clearable />
       </el-form-item>
 
       <el-form-item label="Updated at">
-        <el-input v-model="form.updatedAt" :disabled="!isEditable" clearable />
+        <el-input v-model="form.updatedAt" disabled clearable />
       </el-form-item>
     </el-form>
 
     <div class="text item">
       <el-button
         type="primary"
-        :icon="editButtonIcon"
+        :icon="Check"
         size="small"
-        @click="toggleEditable"
+        @click="updateProfile"
       >
-        {{ isEditable ? 'Save' : 'Edit' }}
+        Save
       </el-button>
       <el-button
         type="danger"
@@ -63,12 +63,10 @@ import type { Customer } from '@/interfaces/Customer'
 import { useProfileStore } from '@/stores/profile'
 import { DateTime } from 'luxon'
 import { watch } from 'vue'
-import { Check, Delete, Edit } from '@element-plus/icons-vue'
-import type { DefineComponent } from 'vue'
+import { Check, Delete } from '@element-plus/icons-vue'
 
 const profileStore = useProfileStore()
 
-const isEditable = ref(false)
 const form = reactive({
   name: '',
   email: '',
@@ -77,15 +75,16 @@ const form = reactive({
   updatedAt: ''
 })
 
-// Create a ref to the profile data in the store using typescript
 const customerProfile: Ref<Customer | null> = ref(profileStore.customerProfile)
 
-const createdAt: ComputedRef<DateTime> = computed(() => {
-  return DateTime.fromISO(customerProfile.value?.created_at).toLocaleString(DateTime.DATETIME_MED)
+const createdAt: ComputedRef<string> = computed(() => {
+  return DateTime.fromISO(customerProfile.value?.created_at ?? '')
+    .toLocaleString(DateTime.DATETIME_MED)
 })
 
-const updatedAt: ComputedRef<DateTime> = computed(() => {
-  return DateTime.fromISO(customerProfile.value?.updated_at).toLocaleString(DateTime.DATETIME_MED)
+const updatedAt: ComputedRef<string> = computed(() => {
+  return DateTime.fromISO(customerProfile.value?.updated_at ?? '')
+    .toLocaleString(DateTime.DATETIME_MED)
 })
 
 const name: ComputedRef<string> = computed(() => {
@@ -100,40 +99,28 @@ const vatNumber: ComputedRef<string> = computed(() => {
   return customerProfile.value?.vat_number ?? ''
 })
 
-const editButtonIcon: ComputedRef<DefineComponent> = computed(() => {
-  return isEditable.value ? Check : Edit
-})
-
-// Create a function that will compare the form data with the profile data in the store and update the profile data in the store if the form data is different from the profile data in the store
 const updateProfile = async (): Promise<void> => {
   const sanitisedFormData = {
     name: form.name,
     email: form.email,
-    vatNumber: form.vatNumber,
-    createdAt: new Date(form.createdAt).toISOString(),
-    updatedAt: new Date(form.updatedAt).toISOString()
+    vatNumber: form.vatNumber
   }
 
-  console.log('update profile:', DateTime.fromISO(new Date(form.createdAt)).to)
-  console.log('update profile:', JSON.parse(JSON.stringify(sanitisedFormData)))
-  console.log('update profile:', JSON.parse(JSON.stringify(customerProfile.value)))
-  if (JSON.stringify(sanitisedFormData) !== JSON.stringify(customerProfile.value)) {
+  const sanitisedCustomerProfile = {
+    name: customerProfile.value?.name ?? '',
+    email: customerProfile.value?.email ?? '',
+    vatNumber: customerProfile.value?.vat_number ?? ''
+  }
+
+  if (JSON.stringify(sanitisedFormData) !== JSON.stringify(sanitisedCustomerProfile)) {
     await profileStore.updateProfile({
       id: customerProfile.value?.id ?? 1,
       name: form.name,
       email: form.email,
-      vat_number: form.vatNumber,
-      created_at: form.createdAt,
-      updated_at: form.updatedAt
+      vatNumber: form.vatNumber
     })
-  }
-}
 
-const toggleEditable = (): void => {
-  isEditable.value = !isEditable.value
-
-  if (isEditable.value) {
-    updateProfile()
+    customerProfile.value = profileStore.customerProfile
   }
 }
 

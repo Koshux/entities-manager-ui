@@ -6,6 +6,12 @@
 
 <script lang="ts" setup>
 import type TheCircuits from '@/components/TheCircuits.vue'
+import { useCircuitsStore } from '@/stores/circuits';
+import { onMounted } from 'vue';
+
+onMounted(async () => {
+  await useCircuitsStore().fetchCircuits()
+})
 </script>
 
 <style>

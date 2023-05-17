@@ -6,6 +6,12 @@
 
 <script lang="ts" setup>
 import TheSites from '@/components/TheSites.vue'
+import { useSitesStore } from '@/stores/sites';
+import { onMounted } from 'vue';
+
+onMounted(async () => {
+  await useSitesStore().fetchSites()
+})
 </script>
 
 <style>

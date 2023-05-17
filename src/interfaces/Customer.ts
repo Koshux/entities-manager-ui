@@ -1,12 +1,16 @@
 import type { DateTime } from 'luxon'
-import type { Site } from './Site'
 
 export interface Customer {
   id: number
   name: string
   email: string
   vat_number: string
-  created_at: DateTime
-  updated_at: DateTime
+  created_at: string
+  updated_at: string
 }
-
+export interface CustomerPayload {
+  id: number
+  name: string
+  email: string
+  vatNumber: string
+}

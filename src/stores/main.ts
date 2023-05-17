@@ -10,5 +10,5 @@ export const useMainStore = defineStore('main', () => {
   return {
     // fetchUserData,
     profile
-  }
+  } as const
 })

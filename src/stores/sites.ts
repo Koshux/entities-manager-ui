@@ -1,11 +1,14 @@
 import { createNewSite, getSite, getSites, removeSite } from '@/api/sites'
 import type { Site } from '@/interfaces/Site'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import type { ComputedRef } from 'vue'
 
 export const useSitesStore = defineStore('sites', () => {
   const sites = ref<Site[]>([])
   const selectedSite = ref<Site | null>(null)
+
+  const sitesCount: ComputedRef<number> = computed(() => sites.value.length)
 
   // Create a method to fetch all sites with a GET request and application/json header with typescript
   const fetchSites = async () => {
@@ -48,6 +51,7 @@ export const useSitesStore = defineStore('sites', () => {
   // Return the methods and reactive variables
   return {
     sites,
+    sitesCount,
     selectedSite,
     fetchSites,
     fetchSite,

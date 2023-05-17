@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref, type ComputedRef } from 'vue'
 import type { Circuit } from '@/interfaces/Circuit'
 import { defineStore } from 'pinia'
 import { createNewCircuit, fetchAllCircuits, fetchCircuit, removeCircuit, saveCircuit } from '@/api/circuits'
@@ -6,6 +6,8 @@ import { createNewCircuit, fetchAllCircuits, fetchCircuit, removeCircuit, saveCi
 export const useCircuitsStore = defineStore('circuits', () => {
   const circuits = ref<Circuit[]>([])
   const selectedCircuit = ref<Circuit | null>(null)
+
+  const circuitCount: ComputedRef<number> = computed(() => circuits.value.length)
 
   const fetchCircuits = async () => {
     const response = await fetchAllCircuits()
@@ -46,11 +48,12 @@ export const useCircuitsStore = defineStore('circuits', () => {
 
   return {
     circuits,
+    circuitCount,
     selectedCircuit,
     fetchCircuits,
     fetchCircuitById,
     createCircuit,
     updateCircuit,
     deleteCircuit
-  }
+  } as const
 })
