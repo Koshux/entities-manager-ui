@@ -1,37 +1,32 @@
 import { ref } from 'vue'
 import type { Circuit } from '@/interfaces/Circuit'
 import { defineStore } from 'pinia'
+import { createNewCircuit, fetchAllCircuits, fetchCircuit, removeCircuit, saveCircuit } from '@/api/circuits'
 
 export const useCircuitsStore = defineStore('circuits', () => {
   const circuits = ref<Circuit[]>([])
   const selectedCircuit = ref<Circuit | null>(null)
 
   const fetchCircuits = async () => {
-    const response = await fetch('http://localhost:3333/circuits')
-    console.log('RESPONSE', response)
-    circuits.value = await response.json()
+    const response = await fetchAllCircuits()
+    circuits.value = response ? await response.json() : []
   }
 
-  const fetchCircuit = async (id: number) => {
-    const response = await fetch(`http://localhost:3333/circuits/${id}`)
-    selectedCircuit.value = await response.json()
+  const fetchCircuitById = async (id: number) => {
+    const response = await fetchCircuit(id)
+    selectedCircuit.value = response ? await response.json() : []
   }
 
   const createCircuit = async (circuit: Circuit) => {
-    const response = await fetch('http://localhost:3333/circuits', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(circuit)
-    })
-    circuits.value = [...circuits.value, await response.json()]
+    const response = await createNewCircuit(circuit)
+    circuits.value = [
+      ...circuits.value,
+      response ? await response.json() : []
+    ]
   }
 
   const updateCircuit = async (circuit: Circuit) => {
-    const response = await fetch(`http://localhost:3333/circuits/${circuit.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(circuit)
-    })
+    await saveCircuit(circuit)
 
     circuits.value = circuits.value.map((c) => (c.id === circuit.id ? circuit : c))
 
@@ -41,9 +36,7 @@ export const useCircuitsStore = defineStore('circuits', () => {
   }
 
   const deleteCircuit = async (id: number) => {
-    await fetch(`http://localhost:3333/circuits/${id}`, {
-      method: 'DELETE'
-    })
+    await removeCircuit(id)
     circuits.value = circuits.value.filter((c: Circuit) => c.id !== id)
 
     if (selectedCircuit.value?.id === id) {
@@ -55,7 +48,7 @@ export const useCircuitsStore = defineStore('circuits', () => {
     circuits,
     selectedCircuit,
     fetchCircuits,
-    fetchCircuit,
+    fetchCircuitById,
     createCircuit,
     updateCircuit,
     deleteCircuit

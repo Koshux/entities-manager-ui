@@ -1,36 +1,33 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Meter } from '@/interfaces/Meter'
+import { createNewMeter, fetchAllMeters, fetchMeter, removeMeter, saveMeter } from '@/api/meters'
 
 export const useMetersStore = defineStore('meters', () => {
   const meters = ref<Meter[]>([])
   const selectedMeter = ref<Meter | null>(null)
 
   const fetchMeters = async () => {
-    const response = await fetch('http://localhost:3333/meters')
-    meters.value = await response.json()
+    const response = await fetchAllMeters()
+    meters.value = response ? await response.json() : []
   }
 
-  const fetchMeter = async (id: number) => {
-    const response = await fetch(`http://localhost:3333/meters/${id}`)
-    selectedMeter.value = await response.json()
+  const fetchMeterById = async (id: number) => {
+    const response = await fetchMeter(id)
+    selectedMeter.value = response ? await response.json() : []
   }
 
   const createMeter = async (meter: Meter) => {
-    const response = await fetch('http://localhost:3333/meters', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(meter)
-    })
-    meters.value = [...meters.value, await response.json()]
+    const response = await createNewMeter(meter)
+
+    meters.value = [
+      ...meters.value,
+      response ? await response.json() : []
+    ]
   }
 
   const updateMeter = async (meter: Meter) => {
-    const response = await fetch(`http://localhost:3333/meters/${meter.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(meter)
-    })
+    const response = await saveMeter(meter)
 
     meters.value = meters.value.map((m) => (m.id === meter.id ? meter : m))
 
@@ -40,9 +37,7 @@ export const useMetersStore = defineStore('meters', () => {
   }
 
   const deleteMeter = async (id: number) => {
-    await fetch(`http://localhost:3333/meters/${id}`, {
-      method: 'DELETE'
-    })
+    await removeMeter(id)
     meters.value = meters.value.filter((m: Meter) => m.id !== id)
 
     if (selectedMeter.value?.id === id) {
@@ -54,7 +49,7 @@ export const useMetersStore = defineStore('meters', () => {
     meters,
     selectedMeter,
     fetchMeters,
-    fetchMeter,
+    fetchMeterById,
     createMeter,
     updateMeter,
     deleteMeter

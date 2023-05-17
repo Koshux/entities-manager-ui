@@ -6,7 +6,7 @@ export const fetchAllProfiles = async (): Promise<Response> => {
     headers: { 'Content-Type': 'application/json' }
   }
 
-  return await fetch('/profile', options)
+  return await fetch('/v1/profile', options)
 }
 
 export const fetchProfileData = async (id: number): Promise<Response> => {
@@ -15,7 +15,7 @@ export const fetchProfileData = async (id: number): Promise<Response> => {
     headers: { 'Content-Type': 'application/json' }
   }
 
-  return await fetch(`/profile/${id}`, options)
+  return await fetch(`/v1/profile/${id}`, options)
 }
 
 export const updateCustomerData = async (payload: Customer): Promise<Response> => {
@@ -25,5 +25,5 @@ export const updateCustomerData = async (payload: Customer): Promise<Response> =
     body: JSON.stringify(payload)
   }
 
-  return await fetch(`/profile/${payload.id}`, options)
+  return await fetch(`/v1/profile/${payload.id}`, options)
 }

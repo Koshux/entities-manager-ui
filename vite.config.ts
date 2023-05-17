@@ -24,19 +24,19 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/circuits': {
+      '/v1/circuits': {
         target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       },
-      '/meters': {
+      '/v1/meters': {
         target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       },
-      '/profile': {
+      '/v1/profile': {
         target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       },
-      '/sites': {
+      '/v1/sites': {
         target: 'http://127.0.0.1:3333/',
         changeOrigin: false
       }

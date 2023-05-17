@@ -1,7 +1,7 @@
 import type { Site } from '@/interfaces/Site'
 
 export const createNewSite = async (site: Site): Promise<void | Response> => {
-  return await fetch('http://localhost:3333/sites', {
+  return await fetch('/v1/sites', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(site)
@@ -11,13 +11,13 @@ export const createNewSite = async (site: Site): Promise<void | Response> => {
 }
 
 export const getSites = async (): Promise<void | Response> => {
-  return await fetch('http://localhost:3333/sites').catch(error => {
+  return await fetch('/v1/sites').catch(error => {
     console.error(error)
   })
 }
 
 export const patchSite = async (site: Site): Promise<void | Response> => {
-  return await fetch(`http://localhost:3333/sites/${site.id}`, {
+  return await fetch(`/v1/sites/${site.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(site)
@@ -27,13 +27,13 @@ export const patchSite = async (site: Site): Promise<void | Response> => {
 }
 
 export const getSite = async (id: number): Promise<void | Response> => {
-  return await fetch(`http://localhost:3333/sites/${id}`).catch(error => {
+  return await fetch(`/v1/sites/${id}`).catch(error => {
     console.error(error)
   })
 }
 
 export const removeSite = async (id: number): Promise<void | Response> => {
-  return await fetch(`http://localhost:3333/sites/${id}`, {
+  return await fetch(`/v1/sites/${id}`, {
     method: 'DELETE'
   }).catch(error => {
     console.error(error)

@@ -3,8 +3,8 @@
 
 import type { Circuit } from '@/interfaces/Circuit'
 
-const createNewCircuit = async (circuit: Circuit): Promise<void | Response> => {
-  return await fetch('http://localhost:3333/circuits', {
+export const createNewCircuit = async (circuit: Circuit): Promise<void | Response> => {
+  return await fetch('/v1/circuits', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(circuit)
@@ -13,14 +13,14 @@ const createNewCircuit = async (circuit: Circuit): Promise<void | Response> => {
   })
 }
 
-const fetchCircuits = async (circuit: Circuit): Promise<void | Response> => {
-  return await fetch('http://localhost:3333/circuits').catch(error => {
+export const fetchAllCircuits = async (): Promise<void | Response> => {
+  return await fetch('/v1/circuits').catch(error => {
     console.error(error)
   })
 }
 
-const updateCircuit = async (circuit: Circuit): Promise<void | Response> => {
-  return await fetch(`http://localhost:3333/circuits/${circuit.id}`, {
+export const saveCircuit = async (circuit: Circuit): Promise<void | Response> => {
+  return await fetch(`/v1/circuits/${circuit.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(circuit)
@@ -29,24 +29,16 @@ const updateCircuit = async (circuit: Circuit): Promise<void | Response> => {
     })
 }
 
-const fetchCircuit = async (id: number): Promise<void | Response> => {
-  return await fetch(`http://localhost:3333/circuits/${id}`).catch(error => {
+export const fetchCircuit = async (id: number): Promise<void | Response> => {
+  return await fetch(`/v1/circuits/${id}`).catch(error => {
     console.error(error)
   })
 }
 
-const deleteCircuit = async (id: number): Promise<void | Response> => {
-  return await fetch(`http://localhost:3333/circuits/${id}`, {
+export const removeCircuit = async (id: number): Promise<void | Response> => {
+  return await fetch(`/v1/circuits/${id}`, {
     method: 'DELETE'
   }).catch(error => {
     console.error(error)
   })
-}
-
-export default {
-  createNewCircuit,
-  fetchCircuits,
-  fetchCircuit,
-  updateCircuit,
-  deleteCircuit
 }
