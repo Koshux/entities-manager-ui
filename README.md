@@ -51,6 +51,67 @@ npm run test:unit
 npm run lint
 ```
 
+# Entities Manager UI
+
+This is a Vue.js frontend application that interacts with an API to manage customers, sites, meters, and circuits.
+
+## Features
+
+- CRUD Operations: Users can create, read, update, and delete customers, sites, meters, and circuits.
+- Dashboard: Users can view an overview of their entities in a visual representation.
+- Vue Router: Navigation is handled using Vue Router to create different pages.
+- element-plus: The app is styled using element-plus, a popular Vue.js component framework.
+- Pinia: The app uses Pinia for state management.
+
+## Project Setup
+
+1. Clone the repository:
+```bash
+   git clone <repository-url>
+```
+2. Install the dependencies:
+```bash
+cd vue-frontend-app
+npm install
+```
+3. Configure the API base URL:
+    - Open src/api/config.js.
+    - Replace the BASE_URL with the base URL of your API.
+
+4. Run the development server:
+```bash
+npm run serve
+```
+The app will be accessible at http://localhost:8080.
+5. Build the production-ready bundle:
+```bash
+    npm run build
+```
+The compiled assets will be located in the dist directory.
+
+### Usage
+
+1. Register a new account using the registration form.
+2. Log in with your account credentials.
+3. Explore the various pages to manage customers, sites, meters, and circuits.
+4. Use the navigation sidebar to switch between pages.
+5. Log out when you're done.
+
+## API Documentation
+
+For detailed API documentation, please refer to the API Documentation for information on available endpoints and request/response formats.
+
+### Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+### License
+
+This project is licensed under the MIT License.
+
+```css
+Feel free to modify and customize this `README.md` file according to your specific project requirements and details.
+```
 ## TODO
 - Use element-plus Cascader component for dropdowns with business logic.
 - We want the ability to create a site.
