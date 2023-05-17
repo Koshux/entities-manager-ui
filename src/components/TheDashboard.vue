@@ -17,17 +17,29 @@
 </template>
 
 <script setup lang="ts">
+import fetchCustomerData from '@/api/profile';
+import { useCircuitsStore } from '@/stores/circuits';
+import { useMetersStore } from '@/stores/meters';
+import { useSitesStore } from '@/stores/sites';
 import { ref, onMounted } from 'vue'
 // import { useStore } from 'pinia'
 // const store = useStore()
+const sitesStore = useSitesStore()
+const metersStore = useMetersStore()
+const circuitsStore = useCircuitsStore()
 
 const siteCount = ref(0)
 const meterCount = ref(0)
 const circuitCount = ref(0)
 
 onMounted(async () => {
-  // const customerData = await fetchCustomerData() // Replace with your API call to fetch customer data
-
+  await fetchCustomerData()
+  await sitesStore.fetchSites()
+  await metersStore.fetchMeters()
+  await circuitsStore.fetchCircuits()
+  siteCount.value = sitesStore.sites.length
+  meterCount.value = metersStore.meters.length
+  circuitCount.value = circuitsStore.circuits.length
   // // Update the counts based on the customer data
   // siteCount.value = customerData.sites.length
 
