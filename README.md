@@ -89,6 +89,10 @@ The app will be accessible at http://localhost:8080.
 ```
 The compiled assets will be located in the dist directory.
 
+### Known issues relate to (to be investigated):
+- Pages don't always refresh after POST/DELETE
+- Certain resolution, the view port hides the content, open devtools or resize the browser to fix.
+
 ### Usage
 
 1. Explore the various pages to manage your profile, sites, meters, and circuits.
