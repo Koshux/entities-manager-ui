@@ -19,8 +19,8 @@ export const fetchAllCircuits = async (): Promise<void | Response> => {
   })
 }
 
-export const saveCircuit = async (circuit: Circuit): Promise<void | Response> => {
-  return await fetch(`/v1/circuits/${circuit.id}`, {
+export const saveCircuit = async (circuit: Circuit | null): Promise<void | Response> => {
+  return await fetch(`/v1/circuits/${circuit?.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(circuit)

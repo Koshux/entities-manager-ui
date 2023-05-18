@@ -1,10 +1,13 @@
+import type { DateTime } from "luxon"
+
 export interface Circuit {
-  id: number
+  id?: number
   name: string
-  installationDate: Date
+  installationDate: DateTime
   isMain: boolean
-  createdAt: Date
-  updatedAt: Date
-  circuits: Circuit[]
+  circuitId?: number | null
+  meterId?: number
+  createdAt?: DateTime
+  updatedAt?: DateTime
 }
 

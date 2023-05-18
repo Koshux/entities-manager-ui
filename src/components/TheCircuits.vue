@@ -4,9 +4,11 @@
     type="primary"
     :icon="Plus"
     size="small"
+    @click="circuitsStore.setAddCircuitDialogFormVisible(true)"
   >
     Create New Circuit
   </el-button>
+  <CircuitsAdd />
 
   <el-card
     v-for="circuit in circuits"
@@ -52,6 +54,7 @@ import { onMounted } from 'vue';
 import type { Ref } from 'vue';
 import type { Circuit } from '@/interfaces/Circuit.js'
 import { Delete, Edit, Plus } from '@element-plus/icons-vue';
+import CircuitsAdd from '@/components/Circuits/CircuitsAdd.vue'
 
 const circuitsStore = useCircuitsStore()
 const circuits: Ref<Circuit[]> = ref(circuitsStore.circuits)

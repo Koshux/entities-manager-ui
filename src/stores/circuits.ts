@@ -4,10 +4,19 @@ import { defineStore } from 'pinia'
 import { createNewCircuit, fetchAllCircuits, fetchCircuit, removeCircuit, saveCircuit } from '@/api/circuits'
 
 export const useCircuitsStore = defineStore('circuits', () => {
+  const addCircuitDialogFormVisible = ref<boolean>(false)
   const circuits = ref<Circuit[]>([])
   const selectedCircuit = ref<Circuit | null>(null)
 
   const circuitCount: ComputedRef<number> = computed(() => circuits.value.length)
+
+  const setAddCircuitDialogFormVisible = (state: boolean): void => {
+    addCircuitDialogFormVisible.value = state
+  }
+
+  const setSelectedCircuit = (circuit: Circuit | null): void => {
+    selectedCircuit.value = circuit
+  }
 
   const fetchCircuits = async () => {
     const response = await fetchAllCircuits()
@@ -25,14 +34,15 @@ export const useCircuitsStore = defineStore('circuits', () => {
       ...circuits.value,
       response ? await response.json() : []
     ]
+    setAddCircuitDialogFormVisible(false)
   }
 
-  const updateCircuit = async (circuit: Circuit) => {
+  const updateCircuit = async (circuit: Circuit | null) => {
     await saveCircuit(circuit)
 
-    circuits.value = circuits.value.map((c) => (c.id === circuit.id ? circuit : c))
+    circuits.value = circuits.value.map((c) => (c.id === circuit?.id ? circuit : c))
 
-    if (selectedCircuit.value?.id === circuit.id) {
+    if (selectedCircuit.value?.id === circuit?.id) {
       selectedCircuit.value = circuit
     }
   }
@@ -47,13 +57,16 @@ export const useCircuitsStore = defineStore('circuits', () => {
   }
 
   return {
+    addCircuitDialogFormVisible,
     circuits,
     circuitCount,
-    selectedCircuit,
+    createCircuit,
+    deleteCircuit,
     fetchCircuits,
     fetchCircuitById,
-    createCircuit,
+    selectedCircuit,
+    setAddCircuitDialogFormVisible,
+    setSelectedCircuit,
     updateCircuit,
-    deleteCircuit
   } as const
 })
