@@ -57,7 +57,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="circuitsStore.setAddCircuitDialogFormVisible(false)">Cancel</el-button>
-        <el-button type="primary" @click="metersStore.createMeter(form)">
+        <el-button type="primary" @click="handleCreate">
           Confirm
         </el-button>
       </span>
@@ -66,12 +66,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useCircuitsStore } from '@/stores/circuits'
 import { useMetersStore } from '@/stores/meters'
 import { DateTime } from 'luxon';
 import type { Meter } from '@/interfaces/Meter';
 import { useSitesStore } from '@/stores/sites'
+import { watch } from 'vue';
+import type { Ref } from 'vue';
 
 const circuitsStore = useCircuitsStore()
 const sitesStore = useSitesStore()
@@ -84,6 +86,11 @@ const form = reactive<Meter>({
   serialNumber: '',
   siteId: null
 })
+
+const handleCreate = async () => {
+  await metersStore.createMeter(form)
+  metersStore.setAddMeterDialogFormVisible(false)
+}
 </script>
 
 <style scoped>

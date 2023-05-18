@@ -34,7 +34,6 @@ export const useCircuitsStore = defineStore('circuits', () => {
       ...circuits.value,
       response ? await response.json() : []
     ]
-    setAddCircuitDialogFormVisible(false)
   }
 
   const updateCircuit = async (circuit: Circuit | null) => {

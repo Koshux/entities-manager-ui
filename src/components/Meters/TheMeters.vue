@@ -30,17 +30,10 @@
         </div>
         <div class="text item">
           <el-button
-            type="primary"
-            :icon="Edit"
-            size="small"
-            disabled
-          >
-            Edit
-          </el-button>
-          <el-button
             type="danger"
             :icon="Delete"
             size="small"
+            @click="metersStore.deleteMeter(meter)"
           >
             Delete
           </el-button>
@@ -56,8 +49,9 @@ import type { Meter } from '@/interfaces/Meter'
 import { useMetersStore } from '@/stores/meters'
 import { onMounted } from 'vue'
 import type { Ref } from 'vue'
-import { Delete, Edit, Plus } from '@element-plus/icons-vue'
+import { Delete, Plus } from '@element-plus/icons-vue'
 import MetersAdd from '@/components/Meters/MetersAdd.vue'
+import { watch } from 'vue'
 
 const metersStore = useMetersStore()
 
@@ -67,4 +61,7 @@ onMounted(async () => {
   await metersStore.fetchMeters()
 })
 
+watch(() => metersStore.meters, () => {
+  meters.value = metersStore.meters
+})
 </script>

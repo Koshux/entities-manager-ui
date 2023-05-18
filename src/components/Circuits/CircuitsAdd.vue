@@ -74,7 +74,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="circuitsStore.setAddCircuitDialogFormVisible(false)">Cancel</el-button>
-        <el-button type="primary" @click="circuitsStore.createCircuit(form)">
+        <el-button type="primary" @click="handleCreate">
           Confirm
         </el-button>
       </span>
@@ -100,6 +100,11 @@ const form = reactive<Circuit>({
   meterId: 0,
   name: ''
 })
+
+const handleCreate = async () => {
+  await circuitsStore.createCircuit(form)
+  circuitsStore.setAddCircuitDialogFormVisible(false)
+}
 </script>
 
 <style scoped>

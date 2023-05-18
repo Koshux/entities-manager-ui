@@ -42,13 +42,15 @@ export const useMetersStore = defineStore('meters', () => {
     }
   }
 
-  const deleteMeter = async (id: number) => {
-    await removeMeter(id)
-    meters.value = meters.value.filter((m: Meter) => m.id !== id)
+  const deleteMeter = async (meter: Meter) => {
+    await removeMeter(meter)
+    meters.value = meters.value.filter((m: Meter) => m.id !== meter.id)
 
-    if (selectedMeter.value?.id === id) {
+    if (selectedMeter.value?.id === meter.id) {
       selectedMeter.value = null
     }
+
+    await fetchMeters()
   }
 
   return {

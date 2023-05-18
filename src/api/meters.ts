@@ -32,9 +32,11 @@ export const fetchMeter = async (id: number): Promise<void | Response> => {
   })
 }
 
-export const removeMeter = async (id: number): Promise<void | Response> => {
-  return await fetch(`/v1/meters/${id}`, {
-    method: 'DELETE'
+export const removeMeter = async (meter: Meter): Promise<void | Response> => {
+  return await fetch(`/v1/meters/${meter.id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(meter),
   }).catch(error => {
     console.error(error)
   })
