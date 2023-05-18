@@ -36,7 +36,7 @@
         type="primary"
         :icon="Edit"
         size="small"
-        @click="sitesStore.deleteSite(site)"
+        disabled
       >
         Edit
       </el-button>
