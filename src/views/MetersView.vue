@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type TheMeters from '@/components/Meters/TheMeters.vue.js'
+import type TheMeters from '@/components/Meters/TheMeters.vue'
 import { useMetersStore } from '@/stores/meters';
 import { onMounted } from 'vue';
 

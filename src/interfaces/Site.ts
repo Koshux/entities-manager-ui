@@ -1,12 +1,11 @@
-import type { Meter } from './Meter'
 
 export interface Site {
-  id: number
+  id?: number
   name: string
   coordinates: string
   address: string
   postCode: string
-  createdAt: Date
-  updatedAt: Date
-  meters: Meter[]
+  createdAt?: Date
+  updatedAt?: Date
+  customerId?: number | null
 }

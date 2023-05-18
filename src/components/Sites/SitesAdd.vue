@@ -1,7 +1,7 @@
 <template>
   <el-dialog
-    v-model="metersStore.addMeterDialogFormVisible"
-    title="Create Meter"
+    v-model="sitesStore.addSiteDialogFormVisible"
+    title="Create Site"
     close-on-click-modal="false"
   >
     <el-form :model="form">
@@ -16,15 +16,15 @@
       </el-form-item>
 
       <el-form-item
-        label="Parent Site"
+        label="Customer link"
         :label-width="formLabelWidth"
       >
         <el-select
-          v-model="form.siteId"
-          placeholder="Select site"
+          v-model="form.customerId"
+          placeholder="Select customer"
         >
           <el-option
-            v-for="site in sitesStore.sites"
+            v-for="site in profileStore.customers"
             :key="site.id"
             :label="site.name"
             :value="site.id"
@@ -33,30 +33,38 @@
       </el-form-item>
 
       <el-form-item
-        label="Serial Number"
+        label="Coordinates"
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="form.serialNumber"
+          v-model="form.coordinates"
           autocomplete="off"
         />
       </el-form-item>
 
       <el-form-item
-        label="Installation Date"
+        label="Address"
         :label-width="formLabelWidth"
       >
-        <el-date-picker
-          v-model="form.installationDate"
-          type="datetime"
-          placeholder="Pick a date and time"
-          style="width: 100%"
+        <el-input
+          v-model="form.address"
+          autocomplete="off"
+        />
+      </el-form-item>
+
+      <el-form-item
+        label="Post Code"
+        :label-width="formLabelWidth"
+      >
+        <el-input
+          v-model="form.postCode"
+          autocomplete="off"
         />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="circuitsStore.setAddCircuitDialogFormVisible(false)">Cancel</el-button>
+        <el-button @click="sitesStore.setAddSiteDialogFormVisible(false)">Cancel</el-button>
         <el-button type="primary" @click="handleCreate">
           Confirm
         </el-button>
@@ -67,27 +75,27 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { useCircuitsStore } from '@/stores/circuits'
-import { useMetersStore } from '@/stores/meters'
-import { DateTime } from 'luxon';
-import type { Meter } from '@/interfaces/Meter';
 import { useSitesStore } from '@/stores/sites'
 
-const circuitsStore = useCircuitsStore()
+import type { Site } from '@/interfaces/Site'
+import { useProfileStore } from '@/stores/profile'
+
 const sitesStore = useSitesStore()
-const metersStore = useMetersStore()
+const profileStore = useProfileStore()
+
 const formLabelWidth = '140px'
 
-const form = reactive<Meter>({
-  installationDate: DateTime.now(),
+const form = reactive<Site>({
   name: '',
-  serialNumber: '',
-  siteId: null
+  coordinates: '',
+  address: '',
+  postCode: '',
+  customerId: null
 })
 
 const handleCreate = async () => {
-  await metersStore.createMeter(form)
-  metersStore.setAddMeterDialogFormVisible(false)
+  await sitesStore.createSite(form)
+  sitesStore.setAddSiteDialogFormVisible(false)
 }
 </script>
 

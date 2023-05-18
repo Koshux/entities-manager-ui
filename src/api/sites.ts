@@ -32,9 +32,11 @@ export const getSite = async (id: number): Promise<void | Response> => {
   })
 }
 
-export const removeSite = async (id: number): Promise<void | Response> => {
-  return await fetch(`/v1/sites/${id}`, {
-    method: 'DELETE'
+export const removeSite = async (site: Site): Promise<void | Response> => {
+  return await fetch(`/v1/sites/${site.id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(site),
   }).catch(error => {
     console.error(error)
   })

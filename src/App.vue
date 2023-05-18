@@ -29,6 +29,7 @@ onMounted(async () => {
   // loaded from /profile. Eventually, it can be the ID of the logged in user.
   const mockedId = 1
   await useProfileStore().fetchProfile(mockedId)
+  await useProfileStore().fetchProfiles()
   await useSitesStore().fetchSites()
   await useCircuitsStore().fetchCircuits()
   await useMetersStore().fetchMeters()

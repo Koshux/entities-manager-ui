@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import TheSites from '@/components/TheSites.vue'
+import TheSites from '@/components/Sites/TheSites.vue'
 import { useSitesStore } from '@/stores/sites'
 import { onBeforeMount } from 'vue'
 

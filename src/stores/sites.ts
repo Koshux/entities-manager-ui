@@ -5,10 +5,15 @@ import { computed, ref } from 'vue'
 import type { ComputedRef } from 'vue'
 
 export const useSitesStore = defineStore('sites', () => {
+  const addSiteDialogFormVisible = ref<boolean>(false)
   const sites = ref<Site[]>([])
   const selectedSite = ref<Site | null>(null)
 
   const sitesCount: ComputedRef<number> = computed(() => sites.value.length)
+
+  const setAddSiteDialogFormVisible = (state: boolean): void => {
+    addSiteDialogFormVisible.value = state
+  }
 
   // Create a method to fetch all sites with a GET request and application/json header with typescript
   const fetchSites = async () => {
@@ -37,26 +42,30 @@ export const useSitesStore = defineStore('sites', () => {
   }
 
   // Create a method to delete a site
-  const deleteSite = async (id: number) => {
-    await removeSite(id)
+  const deleteSite = async (site: Site) => {
+    await removeSite(site)
 
-    sites.value = sites.value.filter((s) => s.id !== id)
+    sites.value = sites.value.filter((s) => s.id !== site.id)
 
     // If the selected site is the one we deleted, clear the selected site
-    if (selectedSite.value?.id === id) {
+    if (selectedSite.value?.id === site.id) {
       selectedSite.value = null
     }
+
+    await fetchSites()
   }
 
   // Return the methods and reactive variables
   return {
+    addSiteDialogFormVisible,
+    createSite,
+    deleteSite,
+    fetchSite,
+    fetchSites,
     sites,
     sitesCount,
     selectedSite,
-    fetchSites,
-    fetchSite,
-    createSite,
+    setAddSiteDialogFormVisible,
     updateSite,
-    deleteSite
   } as const
 })
