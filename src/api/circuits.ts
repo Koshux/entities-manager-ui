@@ -35,9 +35,11 @@ export const fetchCircuit = async (id: number): Promise<void | Response> => {
   })
 }
 
-export const removeCircuit = async (id: number): Promise<void | Response> => {
-  return await fetch(`/v1/circuits/${id}`, {
-    method: 'DELETE'
+export const removeCircuit = async (circuit: Circuit | null): Promise<void | Response> => {
+  return await fetch(`/v1/circuits/${circuit?.id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(circuit)
   }).catch(error => {
     console.error(error)
   })

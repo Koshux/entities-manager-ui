@@ -47,13 +47,15 @@ export const useCircuitsStore = defineStore('circuits', () => {
     }
   }
 
-  const deleteCircuit = async (id: number) => {
-    await removeCircuit(id)
-    circuits.value = circuits.value.filter((c: Circuit) => c.id !== id)
+  const deleteCircuit = async (circuit: Circuit | null) => {
+    await removeCircuit(circuit)
+    circuits.value = circuits.value.filter((c: Circuit) => c.id !== circuit.id)
 
-    if (selectedCircuit.value?.id === id) {
+    if (selectedCircuit.value?.id === circuit.id) {
       selectedCircuit.value = null
     }
+
+    await fetchCircuits()
   }
 
   return {

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type TheCircuits from '@/components/TheCircuits.vue'
+import type TheCircuits from '@/components/Circuits/TheCircuits.vue.js'
 import { useCircuitsStore } from '@/stores/circuits';
 import { onMounted } from 'vue';
 

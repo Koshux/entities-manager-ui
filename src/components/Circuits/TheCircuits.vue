@@ -32,6 +32,7 @@
         type="primary"
         :icon="Edit"
         size="small"
+        disabled
       >
         Edit
       </el-button>
@@ -39,6 +40,7 @@
         type="danger"
         :icon="Delete"
         size="small"
+        @click="circuitsStore.deleteCircuit(circuit)"
       >
         Delete
       </el-button>
@@ -55,11 +57,16 @@ import type { Ref } from 'vue';
 import type { Circuit } from '@/interfaces/Circuit.js'
 import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 import CircuitsAdd from '@/components/Circuits/CircuitsAdd.vue'
+import { watch } from 'vue';
 
 const circuitsStore = useCircuitsStore()
 const circuits: Ref<Circuit[]> = ref(circuitsStore.circuits)
 
 onMounted(async () => {
   await circuitsStore.fetchCircuits()
+})
+
+watch(() => circuitsStore.circuits, () => {
+  circuits.value = circuitsStore.circuits
 })
 </script>

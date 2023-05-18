@@ -4,10 +4,15 @@ import type { Meter } from '@/interfaces/Meter'
 import { createNewMeter, fetchAllMeters, fetchMeter, removeMeter, saveMeter } from '@/api/meters'
 
 export const useMetersStore = defineStore('meters', () => {
+  const addMeterDialogFormVisible = ref<boolean>(false)
   const meters = ref<Meter[]>([])
   const selectedMeter = ref<Meter | null>(null)
 
   const metersCount: ComputedRef<number> = computed(() => meters.value.length)
+
+  const setAddMeterDialogFormVisible = (state: boolean): void => {
+    addMeterDialogFormVisible.value = state
+  }
 
   const fetchMeters = async () => {
     const response = await fetchAllMeters()
@@ -47,13 +52,15 @@ export const useMetersStore = defineStore('meters', () => {
   }
 
   return {
+    addMeterDialogFormVisible,
+    createMeter,
+    deleteMeter,
+    fetchMeters,
+    fetchMeterById,
     meters,
     metersCount,
     selectedMeter,
-    fetchMeters,
-    fetchMeterById,
-    createMeter,
-    updateMeter,
-    deleteMeter
+    setAddMeterDialogFormVisible,
+    updateMeter
   } as const
 })

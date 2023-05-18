@@ -1,11 +1,11 @@
-import type { Circuit } from './Circuit'
+import type { DateTime } from 'luxon'
 
 export interface Meter {
-  id: number
+  id?: number
   name: string
   serialNumber: string
-  installationDate: Date
-  createdAt: Date
-  updatedAt: Date
-  circuits: Circuit[]
+  installationDate: DateTime
+  createdAt?: Date
+  updatedAt?: Date
+  siteId?: number | null
 }

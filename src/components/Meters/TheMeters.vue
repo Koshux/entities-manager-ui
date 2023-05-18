@@ -6,9 +6,11 @@
         type="primary"
         :icon="Plus"
         size="small"
+        @click="metersStore.setAddMeterDialogFormVisible(true)"
       >
         Create New Meter
       </el-button>
+      <MetersAdd />
     </div>
 
     <div class="grid-row">
@@ -31,6 +33,7 @@
             type="primary"
             :icon="Edit"
             size="small"
+            disabled
           >
             Edit
           </el-button>
@@ -54,6 +57,7 @@ import { useMetersStore } from '@/stores/meters'
 import { onMounted } from 'vue'
 import type { Ref } from 'vue'
 import { Delete, Edit, Plus } from '@element-plus/icons-vue'
+import MetersAdd from '@/components/Meters/MetersAdd.vue'
 
 const metersStore = useMetersStore()
 
