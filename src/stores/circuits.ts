@@ -1,63 +1,73 @@
-import { ref } from 'vue'
+import { computed, ref, type ComputedRef } from 'vue'
 import type { Circuit } from '@/interfaces/Circuit'
 import { defineStore } from 'pinia'
+import { createNewCircuit, fetchAllCircuits, fetchCircuit, removeCircuit, saveCircuit } from '@/api/circuits'
 
 export const useCircuitsStore = defineStore('circuits', () => {
+  const addCircuitDialogFormVisible = ref<boolean>(false)
   const circuits = ref<Circuit[]>([])
   const selectedCircuit = ref<Circuit | null>(null)
 
-  const fetchCircuits = async () => {
-    const response = await fetch('http://localhost:3333/circuits')
-    console.log('RESPONSE', response)
-    circuits.value = await response.json()
+  const circuitCount: ComputedRef<number> = computed(() => circuits.value.length)
+
+  const setAddCircuitDialogFormVisible = (state: boolean): void => {
+    addCircuitDialogFormVisible.value = state
   }
 
-  const fetchCircuit = async (id: number) => {
-    const response = await fetch(`http://localhost:3333/circuits/${id}`)
-    selectedCircuit.value = await response.json()
+  const setSelectedCircuit = (circuit: Circuit | null): void => {
+    selectedCircuit.value = circuit
+  }
+
+  const fetchCircuits = async () => {
+    const response = await fetchAllCircuits()
+    circuits.value = response ? await response.json() : []
+  }
+
+  const fetchCircuitById = async (id: number) => {
+    const response = await fetchCircuit(id)
+    selectedCircuit.value = response ? await response.json() : []
   }
 
   const createCircuit = async (circuit: Circuit) => {
-    const response = await fetch('http://localhost:3333/circuits', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(circuit)
-    })
-    circuits.value = [...circuits.value, await response.json()]
+    const response = await createNewCircuit(circuit)
+    circuits.value = [
+      ...circuits.value,
+      response ? await response.json() : []
+    ]
   }
 
-  const updateCircuit = async (circuit: Circuit) => {
-    const response = await fetch(`http://localhost:3333/circuits/${circuit.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(circuit)
-    })
+  const updateCircuit = async (circuit: Circuit | null) => {
+    await saveCircuit(circuit)
 
-    circuits.value = circuits.value.map((c) => (c.id === circuit.id ? circuit : c))
+    circuits.value = circuits.value.map((c) => (c.id === circuit?.id ? circuit : c))
 
-    if (selectedCircuit.value?.id === circuit.id) {
+    if (selectedCircuit.value?.id === circuit?.id) {
       selectedCircuit.value = circuit
     }
   }
 
-  const deleteCircuit = async (id: number) => {
-    await fetch(`http://localhost:3333/circuits/${id}`, {
-      method: 'DELETE'
-    })
-    circuits.value = circuits.value.filter((c: Circuit) => c.id !== id)
+  const deleteCircuit = async (circuit: Circuit | null) => {
+    await removeCircuit(circuit)
+    circuits.value = circuits.value.filter((c: Circuit) => c.id !== circuit.id)
 
-    if (selectedCircuit.value?.id === id) {
+    if (selectedCircuit.value?.id === circuit.id) {
       selectedCircuit.value = null
     }
+
+    await fetchCircuits()
   }
 
   return {
+    addCircuitDialogFormVisible,
     circuits,
-    selectedCircuit,
-    fetchCircuits,
-    fetchCircuit,
+    circuitCount,
     createCircuit,
+    deleteCircuit,
+    fetchCircuits,
+    fetchCircuitById,
+    selectedCircuit,
+    setAddCircuitDialogFormVisible,
+    setSelectedCircuit,
     updateCircuit,
-    deleteCircuit
-  }
+  } as const
 })

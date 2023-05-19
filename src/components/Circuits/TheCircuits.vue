@@ -2,11 +2,13 @@
   <h1>Circuits</h1>
   <el-button
     type="primary"
-    icon="el-icon-plus"
+    :icon="Plus"
     size="small"
+    @click="circuitsStore.setAddCircuitDialogFormVisible(true)"
   >
     Create New Circuit
   </el-button>
+  <CircuitsAdd />
 
   <el-card
     v-for="circuit in circuits"
@@ -28,15 +30,17 @@
     <div class="text item">
       <el-button
         type="primary"
-        icon="el-icon-edit"
+        :icon="Edit"
         size="small"
+        disabled
       >
         Edit
       </el-button>
       <el-button
         type="danger"
-        icon="el-icon-delete"
+        :icon="Delete"
         size="small"
+        @click="circuitsStore.deleteCircuit(circuit)"
       >
         Delete
       </el-button>
@@ -51,11 +55,18 @@ import { useCircuitsStore } from '@/stores/circuits'
 import { onMounted } from 'vue';
 import type { Ref } from 'vue';
 import type { Circuit } from '@/interfaces/Circuit.js'
+import { Delete, Edit, Plus } from '@element-plus/icons-vue';
+import CircuitsAdd from '@/components/Circuits/CircuitsAdd.vue'
+import { watch } from 'vue';
 
 const circuitsStore = useCircuitsStore()
 const circuits: Ref<Circuit[]> = ref(circuitsStore.circuits)
 
 onMounted(async () => {
   await circuitsStore.fetchCircuits()
+})
+
+watch(() => circuitsStore.circuits, () => {
+  circuits.value = circuitsStore.circuits
 })
 </script>

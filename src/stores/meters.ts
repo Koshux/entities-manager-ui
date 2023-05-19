@@ -1,37 +1,40 @@
-import { ref } from 'vue'
+import { ref, type ComputedRef, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Meter } from '@/interfaces/Meter'
+import { createNewMeter, fetchAllMeters, fetchMeter, removeMeter, saveMeter } from '@/api/meters'
 
 export const useMetersStore = defineStore('meters', () => {
+  const addMeterDialogFormVisible = ref<boolean>(false)
   const meters = ref<Meter[]>([])
   const selectedMeter = ref<Meter | null>(null)
 
-  const fetchMeters = async () => {
-    const response = await fetch('http://localhost:3333/meters')
-    meters.value = await response.json()
+  const metersCount: ComputedRef<number> = computed(() => meters.value.length)
+
+  const setAddMeterDialogFormVisible = (state: boolean): void => {
+    addMeterDialogFormVisible.value = state
   }
 
-  const fetchMeter = async (id: number) => {
-    const response = await fetch(`http://localhost:3333/meters/${id}`)
-    selectedMeter.value = await response.json()
+  const fetchMeters = async () => {
+    const response = await fetchAllMeters()
+    meters.value = response ? await response.json() : []
+  }
+
+  const fetchMeterById = async (id: number) => {
+    const response = await fetchMeter(id)
+    selectedMeter.value = response ? await response.json() : []
   }
 
   const createMeter = async (meter: Meter) => {
-    const response = await fetch('http://localhost:3333/meters', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(meter)
-    })
-    meters.value = [...meters.value, await response.json()]
+    const response = await createNewMeter(meter)
+
+    meters.value = [
+      ...meters.value,
+      response ? await response.json() : []
+    ]
   }
 
   const updateMeter = async (meter: Meter) => {
-    const response = await fetch(`http://localhost:3333/meters/${meter.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(meter)
-    })
-
+    await saveMeter(meter)
     meters.value = meters.value.map((m) => (m.id === meter.id ? meter : m))
 
     if (selectedMeter.value?.id === meter.id) {
@@ -39,24 +42,27 @@ export const useMetersStore = defineStore('meters', () => {
     }
   }
 
-  const deleteMeter = async (id: number) => {
-    await fetch(`http://localhost:3333/meters/${id}`, {
-      method: 'DELETE'
-    })
-    meters.value = meters.value.filter((m: Meter) => m.id !== id)
+  const deleteMeter = async (meter: Meter) => {
+    await removeMeter(meter)
+    meters.value = meters.value.filter((m: Meter) => m.id !== meter.id)
 
-    if (selectedMeter.value?.id === id) {
+    if (selectedMeter.value?.id === meter.id) {
       selectedMeter.value = null
     }
+
+    await fetchMeters()
   }
 
   return {
-    meters,
-    selectedMeter,
-    fetchMeters,
-    fetchMeter,
+    addMeterDialogFormVisible,
     createMeter,
-    updateMeter,
-    deleteMeter
-  }
+    deleteMeter,
+    fetchMeters,
+    fetchMeterById,
+    meters,
+    metersCount,
+    selectedMeter,
+    setAddMeterDialogFormVisible,
+    updateMeter
+  } as const
 })

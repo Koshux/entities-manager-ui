@@ -5,7 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-import type TheMeters from '@/components/TheMeters.vue'
+import type TheMeters from '@/components/Meters/TheMeters.vue'
+import { useMetersStore } from '@/stores/meters';
+import { onMounted } from 'vue';
+
+onMounted(async () => {
+  await useMetersStore().fetchMeters()
+})
 </script>
 
 <style>

@@ -2,11 +2,13 @@
   <h1>Sites</h1>
   <el-button
     type="primary"
-    icon="el-icon-plus"
+    :icon="Plus"
     size="small"
+    @click="sitesStore.setAddSiteDialogFormVisible(true)"
   >
     Create New Site
   </el-button>
+  <SitesAdd />
 
   <!-- For all the sites loaded from the sites pinia store, for each site, render a card with a title, content and operations using element-plus -->
   <el-card
@@ -17,6 +19,8 @@
   >
     <div class="text item">
       <span class="title">{{ site.name }}</span>
+    </div>
+    <div class="text item">
       <span class="content">{{ site.address }}</span>
     </div>
     <div class="text item">
@@ -27,18 +31,20 @@
       <span class="title">{{ site.createdAt }}</span>
       <span class="content">{{ site.updatedAt }}</span>
     </div>
-    <div class="text item">
+    <div class="flex justify-content-end">
       <el-button
         type="primary"
-        icon="el-icon-edit"
+        :icon="Edit"
         size="small"
+        disabled
       >
         Edit
       </el-button>
       <el-button
         type="danger"
-        icon="el-icon-delete"
+        :icon="Delete"
         size="small"
+        @click="sitesStore.deleteSite(site)"
       >
         Delete
       </el-button>
@@ -48,18 +54,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Site } from '@/interfaces/Site'
+import { ref, watch } from 'vue'
+import type { Ref } from 'vue'
+
+import { Delete, Edit, Plus } from '@element-plus/icons-vue'
+
+import SitesAdd from '@/components/Sites/SitesAdd.vue'
 import { useSitesStore } from '@/stores/sites'
-import { onMounted } from 'vue';
-import type { Ref } from 'vue';
+import type { Site } from '@/interfaces/Site'
 
 const sitesStore = useSitesStore()
-
-// Create a ref to the sites data in the store using typescript
 const sites: Ref<Site[]> = ref(sitesStore.sites)
 
-onMounted(async () => {
-  await sitesStore.fetchSites()
+watch(sitesStore.sites, (newSites) => {
+  sites.value = newSites
 })
 </script>

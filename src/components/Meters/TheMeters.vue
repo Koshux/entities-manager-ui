@@ -1,21 +1,19 @@
 <template>
   <h1>Meters</h1>
-
-  <!-- Render a grid container to house the create new meter button and cards of the loaded meters ref using element-plus -->
   <div class="grid-container">
-    <!-- Separate  the button and cards by grid rows -->
     <div class="grid-row">
       <el-button
         type="primary"
-        icon="el-icon-plus"
+        :icon="Plus"
         size="small"
+        @click="metersStore.setAddMeterDialogFormVisible(true)"
       >
         Create New Meter
       </el-button>
+      <MetersAdd />
     </div>
 
     <div class="grid-row">
-      <!-- For all the meters loaded from the meters pinia store, for each meter, render a card with a title, content and operations using element-plus -->
       <el-card
         v-for="meter in meters"
         :key="meter.id"
@@ -32,22 +30,17 @@
         </div>
         <div class="text item">
           <el-button
-            type="primary"
-            icon="el-icon-edit"
-            size="small"
-          >
-            Edit
-          </el-button>
-          <el-button
             type="danger"
-            icon="el-icon-delete"
+            :icon="Delete"
             size="small"
+            @click="metersStore.deleteMeter(meter)"
           >
             Delete
           </el-button>
         </div>
       </el-card>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -56,6 +49,9 @@ import type { Meter } from '@/interfaces/Meter'
 import { useMetersStore } from '@/stores/meters'
 import { onMounted } from 'vue'
 import type { Ref } from 'vue'
+import { Delete, Plus } from '@element-plus/icons-vue'
+import MetersAdd from '@/components/Meters/MetersAdd.vue'
+import { watch } from 'vue'
 
 const metersStore = useMetersStore()
 
@@ -65,4 +61,7 @@ onMounted(async () => {
   await metersStore.fetchMeters()
 })
 
+watch(() => metersStore.meters, () => {
+  meters.value = metersStore.meters
+})
 </script>
